@@ -29,9 +29,11 @@ public class HibernateRefreshMain {
     private static void readDemo(EntityManagerFactory entityManagerFactory, EntityManager entityManager) {
         Employee employee = entityManager.find(Employee.class, 1);
         System.out.println("********Employee **********");
-        System.out.println(employee.getName());
-        System.out.println("********Employee Access Card **********");
-        System.out.println(employee.getAccessCard());
+        System.out.println(employee);
+
+        PayStub payStub = entityManager.find(PayStub.class, 2);
+        System.out.println("********Paystub**********");
+        System.out.println(payStub);
     }
 
     private static void saveDemo(EntityManagerFactory entityManagerFactory, EntityManager entityManager) {
@@ -70,6 +72,11 @@ public class HibernateRefreshMain {
         accessCard2.setIssuedDate(new Date());
         employee1.setAccessCard(accessCard2);
 
+        PayStub payStub1= new PayStub(new Date(),new Date(),1000,employee);
+        PayStub payStub2= new PayStub(new Date(),new Date(),2000,employee);
+        PayStub payStub3= new PayStub(new Date(),new Date(),300.40f,employee1);
+        PayStub payStub4= new PayStub(new Date(),new Date(),599.98f,employee1);
+
         try {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
@@ -77,6 +84,10 @@ public class HibernateRefreshMain {
             entityManager.persist(employee1);
             entityManager.persist(accessCard1);
             entityManager.persist(accessCard2);
+            entityManager.persist(payStub1);
+            entityManager.persist(payStub2);
+            entityManager.persist(payStub3);
+            entityManager.persist(payStub4);
             transaction.commit();
 
 

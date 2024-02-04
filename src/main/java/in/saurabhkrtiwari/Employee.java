@@ -3,6 +3,7 @@ package in.saurabhkrtiwari;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE_DATA")
@@ -23,20 +24,6 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     private java.util.Date dob;
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", ssn='" + ssn + '\'' +
-                ", dob=" + dob +
-                ", updateTime=" + updateTime +
-                ", employeeType=" + employeeType +
-                ", accessCard=" + accessCard +
-                '}';
-    }
-
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updateTime;
 
@@ -46,6 +33,17 @@ public class Employee {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ACCESS_CARD_ID")
     private AccessCard accessCard;
+
+    @OneToMany(mappedBy = "employee",fetch = FetchType.EAGER)
+    private List<PayStub> payStubs;
+
+    public List<PayStub> getPayStubs() {
+        return payStubs;
+    }
+
+    public void setPayStubs(List<PayStub> payStubs) {
+        this.payStubs = payStubs;
+    }
 
     public AccessCard getAccessCard() {
         return accessCard;
@@ -111,4 +109,18 @@ public class Employee {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                ", updateTime=" + updateTime +
+                ", employeeType=" + employeeType +
+                ", accessCard=" + accessCard +
+                ", payStubs=" + payStubs +
+                '}';
+    }
 }
