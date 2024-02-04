@@ -9,6 +9,7 @@ import java.util.Date;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "employee_name")
@@ -16,7 +17,7 @@ public class Employee {
 
     private int age;
 
-    @Column(name = "ssn",unique = true,nullable = false)
+    @Column(name = "ssn", unique = true, nullable = false)
     private String ssn;
 
     @Temporal(TemporalType.DATE)
@@ -27,6 +28,18 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ACCESS_CARD_ID")
+    private AccessCard accessCard;
+
+    public AccessCard getAccessCard() {
+        return accessCard;
+    }
+
+    public void setAccessCard(AccessCard accessCard) {
+        this.accessCard = accessCard;
+    }
 
     public EmployeeType getEmployeeType() {
         return employeeType;
@@ -82,5 +95,18 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                ", updateTime=" + updateTime +
+                ", employeeType=" + employeeType +
+                '}';
     }
 }
