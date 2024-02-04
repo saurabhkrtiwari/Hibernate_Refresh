@@ -9,12 +9,32 @@ import java.util.Date;
 
 public class HibernateRefreshMain {
     public static void main(String[] args) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        saveDemo();
+        EntityManagerFactory entityManagerFactory2 = Persistence.createEntityManagerFactory("myApp");
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+
+
+        saveDemo(entityManagerFactory,entityManager);
+        readDemo(entityManagerFactory2,entityManager2);
+
+        entityManager.close();
+        entityManagerFactory.close();
+        entityManager2.close();
+        entityManagerFactory2.close();
 
     }
 
-    private static void saveDemo() {
+    private static void readDemo(EntityManagerFactory entityManagerFactory, EntityManager entityManager) {
+        Employee employee = entityManager.find(Employee.class, 1);
+        System.out.println("********Employee **********");
+        System.out.println(employee.getName());
+        System.out.println("********Employee Access Card **********");
+        System.out.println(employee.getAccessCard());
+    }
+
+    private static void saveDemo(EntityManagerFactory entityManagerFactory, EntityManager entityManager) {
         Employee employee = new Employee();
         employee.setName("Test Employee");
         employee.setAge(22);
@@ -49,9 +69,7 @@ public class HibernateRefreshMain {
         accessCard2.setIssuedDate(new Date());
         employee1.setAccessCard(accessCard2);
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
         try {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
             entityManager.persist(employee);
@@ -60,8 +78,7 @@ public class HibernateRefreshMain {
             entityManager.persist(accessCard2);
             transaction.commit();
 
-            entityManager.close();
-            entityManagerFactory.close();
+
 
 
         } finally {

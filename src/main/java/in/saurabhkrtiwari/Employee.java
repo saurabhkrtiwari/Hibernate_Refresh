@@ -23,13 +23,27 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     private java.util.Date dob;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                ", updateTime=" + updateTime +
+                ", employeeType=" + employeeType +
+                ", accessCard=" + accessCard +
+                '}';
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updateTime;
 
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCESS_CARD_ID")
     private AccessCard accessCard;
 
@@ -97,16 +111,4 @@ public class Employee {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", ssn='" + ssn + '\'' +
-                ", dob=" + dob +
-                ", updateTime=" + updateTime +
-                ", employeeType=" + employeeType +
-                '}';
-    }
 }
