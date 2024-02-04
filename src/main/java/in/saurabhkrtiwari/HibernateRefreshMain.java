@@ -63,6 +63,7 @@ public class HibernateRefreshMain {
         accessCard1.setIssuedDate(new Date());
         employee.setAccessCard(accessCard1);
 
+
         AccessCard accessCard2 = new AccessCard();
         accessCard2.setActive(true);
         accessCard2.setFirmwareVersion("1.0");

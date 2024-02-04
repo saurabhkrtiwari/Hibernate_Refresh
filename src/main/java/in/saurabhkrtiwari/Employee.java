@@ -43,7 +43,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ACCESS_CARD_ID")
     private AccessCard accessCard;
 

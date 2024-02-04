@@ -8,16 +8,6 @@ import java.util.Date;
 @Table(name = "ACCESS_CARD")
 public class AccessCard {
 
-    @Override
-    public String toString() {
-        return "AccessCard{" +
-                "id=" + id +
-                ", issuedDate=" + issuedDate +
-                ", isActive=" + isActive +
-                ", firmwareVersion='" + firmwareVersion + '\'' +
-                '}';
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -27,6 +17,28 @@ public class AccessCard {
 
 
     private boolean isActive;
+
+    @OneToOne(mappedBy = "accessCard")
+    private Employee owner;
+
+    public Employee getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String toString() {
+        return "AccessCard{" +
+                "id=" + id +
+                ", issuedDate=" + issuedDate +
+                ", isActive=" + isActive +
+                ", owner=" + owner.getName() +
+                ", firmwareVersion='" + firmwareVersion + '\'' +
+                '}';
+    }
+
+    public void setOwner(Employee owner) {
+        this.owner = owner;
+    }
 
     @Column(length = 42)
     private String firmwareVersion;
