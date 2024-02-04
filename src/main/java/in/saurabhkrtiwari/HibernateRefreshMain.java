@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.Date;
+
 public class HibernateRefreshMain {
     public static void main(String[] args) {
 
@@ -12,6 +14,10 @@ public class HibernateRefreshMain {
         employee.setId(1);
         employee.setName("Test Employee");
         employee.setAge(22);
+        employee.setDob(new Date());
+        employee.setUpdateTime(new Date());
+        employee.setEmployeeType(EmployeeType.FULLTIME);
+
 
         employee.setSsn("ssn");
 
@@ -20,7 +26,10 @@ public class HibernateRefreshMain {
         employee1.setName("Test Employee");
         employee1.setAge(22);
 
-        employee1.setSsn("ssn");
+        employee1.setSsn("ssn1");
+        employee1.setDob(new Date());
+        employee1.setUpdateTime(new Date());
+        employee1.setEmployeeType(EmployeeType.TEMPERORY);
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
         try {

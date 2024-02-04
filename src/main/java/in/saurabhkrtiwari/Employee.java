@@ -1,9 +1,8 @@
 package in.saurabhkrtiwari;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "EMPLOYEE_DATA")
@@ -19,6 +18,39 @@ public class Employee {
 
     @Column(name = "ssn",unique = true,nullable = false)
     private String ssn;
+
+    @Temporal(TemporalType.DATE)
+    private java.util.Date dob;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date updateTime;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeType employeeType;
+
+    public EmployeeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 
     public int getAge() {
         return age;
