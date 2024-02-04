@@ -2,6 +2,7 @@ package in.saurabhkrtiwari;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,8 +35,20 @@ public class Employee {
     @JoinColumn(name = "ACCESS_CARD_ID")
     private AccessCard accessCard;
 
-    @OneToMany(mappedBy = "employee",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "employee",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<PayStub> payStubs;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "DEPARTMENT_EMPLOYEE_MAPPING",joinColumns = @JoinColumn(name = "EMP_ID"),inverseJoinColumns = @JoinColumn(name = "DEP_ID"))
+    private List<Department> departments = new ArrayList<>();
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
+    }
 
     public List<PayStub> getPayStubs() {
         return payStubs;
@@ -121,6 +134,7 @@ public class Employee {
                 ", employeeType=" + employeeType +
                 ", accessCard=" + accessCard +
                 ", payStubs=" + payStubs +
+                ", departments=" + departments +
                 '}';
     }
 }

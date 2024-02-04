@@ -17,6 +17,7 @@ public class PayStub {
     private float salary;
 
     @ManyToOne
+    @JoinColumn(name = "EMP_ID")
     private Employee employee;
 
     public Employee getEmployee() {

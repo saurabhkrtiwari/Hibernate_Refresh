@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 import java.util.Date;
 import java.util.List;
 
-public class HibernateRefreshMain {
+public class HibernateRefreshDelete {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -16,15 +16,23 @@ public class HibernateRefreshMain {
         EntityManagerFactory entityManagerFactory2 = Persistence.createEntityManagerFactory("myApp");
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
 
-
-       saveDemo(entityManagerFactory,entityManager);
-        readDemo(entityManagerFactory2,entityManager2);
+        delete(entityManager,entityManagerFactory);
 
        /* entityManager.close();
         entityManagerFactory.close();
         entityManager2.close();
         entityManagerFactory2.close();*/
 
+    }
+
+    private static void delete(EntityManager entityManager, EntityManagerFactory entityManagerFactory) {
+
+        Employee employee = entityManager.find(Employee.class, 1);
+        Department department = entityManager.find(Department.class, 2);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(employee);
+        transaction.commit();
     }
 
     private static void readDemo(EntityManagerFactory entityManagerFactory, EntityManager entityManager) {
