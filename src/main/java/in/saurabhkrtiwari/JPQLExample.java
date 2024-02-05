@@ -14,7 +14,20 @@ public class JPQLExample {
         //getAllEmployees();
        // getAllEmployeesWithActiveAccessCard();
         //getAllEmployeesPaymentsWithName();
-        getAllEmployeesWithAgeAsParameter(20);
+        //getAllEmployeesWithAgeAsParameter(20);
+        getByNamedQuery();
+    }
+
+    private static void getByNamedQuery() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
+        EntityManager entityManager =entityManagerFactory.createEntityManager();
+
+      TypedQuery<Employee> employeeTypedQuery = entityManager.createNamedQuery("employee_asc_name",Employee.class);
+        List<Employee> resultList = employeeTypedQuery.getResultList();
+        resultList.forEach(System.out::println);
+
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     private static void getAllEmployeesWithAgeAsParameter(int minAge) {
