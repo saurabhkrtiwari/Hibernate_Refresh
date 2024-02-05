@@ -31,14 +31,14 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCESS_CARD_ID")
     private AccessCard accessCard;
 
-    @OneToMany(mappedBy = "employee",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<PayStub> payStubs;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "DEPARTMENT_EMPLOYEE_MAPPING",joinColumns = @JoinColumn(name = "EMP_ID"),inverseJoinColumns = @JoinColumn(name = "DEP_ID"))
     private List<Department> departments = new ArrayList<>();
 
@@ -132,9 +132,7 @@ public class Employee {
                 ", dob=" + dob +
                 ", updateTime=" + updateTime +
                 ", employeeType=" + employeeType +
-                ", accessCard=" + accessCard +
-                ", payStubs=" + payStubs +
-                ", departments=" + departments +
+
                 '}';
     }
 }
