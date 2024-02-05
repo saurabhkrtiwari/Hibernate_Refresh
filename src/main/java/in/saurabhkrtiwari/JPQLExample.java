@@ -13,7 +13,23 @@ public class JPQLExample {
     public static void main(String[] args) {
         //getAllEmployees();
        // getAllEmployeesWithActiveAccessCard();
-        getAllEmployeesPaymentsWithName();
+        //getAllEmployeesPaymentsWithName();
+        getAllEmployeesWithAgeAsParameter(20);
+    }
+
+    private static void getAllEmployeesWithAgeAsParameter(int minAge) {
+
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myApp");
+            EntityManager entityManager =entityManagerFactory.createEntityManager();
+
+            TypedQuery<Employee> employeeTypedQuery = entityManager.createQuery("select e from Employee e where e.age>:minAge",Employee.class);
+            employeeTypedQuery.setParameter("minAge",minAge);
+            List<Employee> resultList = employeeTypedQuery.getResultList();
+            resultList.forEach(System.out::println);
+
+            entityManager.close();
+            entityManagerFactory.close();
+
     }
 
     private static void getAllEmployeesPaymentsWithName() {
